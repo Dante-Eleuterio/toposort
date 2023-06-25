@@ -2,9 +2,11 @@
 using namespace std;
 vector<char*> s;
 int cycle = 0;
+int t =0;
 void dfs(graphs* w)
 {
     w->state = 1;
+    w->pre = t++;
     for(graphs* v: w->neighborhood)
     {
         if(v->state == 0)
@@ -12,73 +14,40 @@ void dfs(graphs* w)
             dfs(v);
         }
 
-        else if(v->state == 1)
-        {
-            cycle = 1;
-        }
     }
     w->state = 2;
+    w->pos = t++;
     s.push_back(w->name);
 }
-
+// pre[v] < pre[u] < pos [u] < pos[v]
 int detectCycle(vector<graphs>* g)
 {
     for(graphs v: *g)
     {
         v.state = 0;
     }
-
+    t = 0;
     for(int i =0; i < (*g).size(); i++)
     {
         if((*g)[i].state == 0 )
         {
             dfs(&(*g)[i]);
+        }
+    }
+    
 
-            if(cycle)
+    for( graphs v: *g)
+    {
+        for(graphs* w: v.neighborhood)
+        {
+            if(v.pos < w->pos)
             {
                 return 1;
             }
         }
     }
+
     return 0;
-}
-
-void topoSort(graphs* w)
-{
-    w->state = 1;
-
-    for(graphs* v: w->neighborhood)
-    {
-        if(v->state == 0)
-        {
-            topoSort(v);
-        }
-    }
-    // char aux[1024];
-    // strncpy(aux,w->name,1024);
-    // s.push(aux);
-    w->state = 2;
-}
-
-void sort(vector<graphs> *g)
-{
-    for(graphs v: *g)
-    {
-        v.state = 0;
-    }
-
-    for( graphs v: *g)
-    {
-        if(v.state == 0)
-        {
-            topoSort(&v);
-        }
-    }
-
-    // for(graphs v: *g)
-    // {
-    //     cout << v.state << "\n";
-    // }
 }
 
 

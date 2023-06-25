@@ -8,6 +8,8 @@ class graphs{
     public:
         char name[1024];
         int state;
+        int pre;
+        int pos;
         vector<graphs*> neighborhood;
 };
 
