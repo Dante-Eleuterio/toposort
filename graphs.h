@@ -12,4 +12,3 @@ class graphs{
         int pos;
         vector<graphs*> neighborhood;
 };
-

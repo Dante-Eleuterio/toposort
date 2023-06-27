@@ -1,5 +1,5 @@
 CC = g++
-LDLIBS = -lcgraph -lgvc -lcdt
+LDLIBS = -lcgraph  -lgvc -lcdt
 
 toposort: main.o
 	$(CC) -o toposort main.o $(LDLIBS)
